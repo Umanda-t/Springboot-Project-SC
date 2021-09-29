@@ -18,14 +18,14 @@ public class AppController {
     @Autowired
     private BookRepository BookRepo;
 
-   @RequestMapping("")
+    @GetMapping("")
     public String viewHomePage() {
         return "index";
     }
 
 
 
-    @RequestMapping("/register")
+    @GetMapping("/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new User());
 
@@ -37,7 +37,7 @@ public class AppController {
         return "signup_form";
     }
     **/
-   @RequestMapping("/process_register")
+    @PostMapping("/process_register")
     public String processRegister(User user) {
         //model.addAttribute("user",  user);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -48,14 +48,14 @@ public class AppController {
 
         return "register_success";
     }
-    @RequestMapping("/users_process")
+    @GetMapping("/users_process")
     public String listUsers(Model model) {
         List<User> listUsers = userRepo.findAll();
        model.addAttribute("listUsers", listUsers);
         return "users";
     }
 
-    @RequestMapping(path="/add")
+    @GetMapping(path="/add")
     public @ResponseBody
     String addNewUser () {
         User n = new User();
@@ -68,21 +68,21 @@ public class AppController {
     }
     //end of User
 
-    @RequestMapping("/booksregister")
+@GetMapping("/booksregister")
     public String showBookRegistrationForm(Model model) {
         model.addAttribute("book", new Book());
         return "books";
     }
 
 
-    @RequestMapping("/book_process")
+    @PostMapping("/book_process")
     public String bookprocessRegister(Book book) {
 
         BookRepo.save(book);
 
         return "book_register_success";
     }
-    @RequestMapping("/list_Book")
+    @GetMapping("/list_Book")
     public String listBooks(Model model) {
         List<Book> listBooks = BookRepo.findAll();
         model.addAttribute("listBooks", listBooks);
@@ -91,12 +91,12 @@ public class AppController {
     }
 
     //end of book
-    @RequestMapping("/stafflogin")
+    @GetMapping("/stafflogin")
     public String showStafflogin() {
         return "stafflogin_form";
     }
 
-    @RequestMapping("/Login_Service")
+    @PostMapping("/Login_Service")
    public String StaffLoginService() {
        return "Success";}
 
@@ -104,7 +104,7 @@ public class AppController {
    // public String showSuccess() {
        // return "Success";}
 
-    @RequestMapping("/bookview/delete/{id}")
+    @GetMapping("/bookview/delete/{id}")
     public String deleteBook(@PathVariable("id")Long id, RedirectAttributes ra)
     {
         BookRepo.deleteById(id);
